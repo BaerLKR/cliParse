@@ -1,4 +1,8 @@
+// use colored::Colorize;
+use std::collections::HashSet;
 #[derive(PartialEq)]
+#[derive(Hash)]
+#[derive(Eq)]
 pub enum Argument {
     // change what arguments are possible here!
     None,
@@ -44,5 +48,36 @@ fn eval(data: Vec<String>) -> Vec<Argument> {
         re.clear();
         re.push(Argument::Help);
     }
+    //or that it is not allowed to use the same argument 2 times
+    match contains_duplicates(&re) {
+        Some(v) => {
+            re.remove(v);
+        },
+        None => {},
+    };
     re
+}
+fn contains_duplicates(vec: &Vec<Argument>) -> Option<usize> {
+    // vec.iter()
+    //     .find_map(|&x| {
+    //         if vec.iter().filter(|&y| y == x).count() > 1 {
+    //             Some(x)
+    //         } else {
+    //             None
+    //         }
+    //     })
+    // let mut seen = HashSet::new();
+    // for x in vec {
+    //     if !seen.insert(x) {
+    //         return Some(x);
+    //     }
+    // }
+    // None
+    let mut seen = HashSet::new();
+    for (i, x) in vec.iter().enumerate() {
+        if !seen.insert(x) {
+            return Some(i);
+        }
+    }
+    None
 }
