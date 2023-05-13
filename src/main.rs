@@ -7,12 +7,13 @@ fn main() {
             arg::Argument::Test => println!("Test"),
             arg::Argument::Demo => demo(),
             arg::Argument::None | arg::Argument::Help => help(),
+            arg::Argument::Path(x) => println!("{x}")
         }
     }
 }
 fn help() {
     println!("{}", "command <argument>".green());
-    println!("{}", "Arguments: Help, Demo, Test".green());
+    println!("{}", "Arguments: Help, Demo, Test, path (-p=<path>)".green());
 }
 fn demo() {
     for n in 0..100 {

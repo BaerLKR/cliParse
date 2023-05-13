@@ -8,6 +8,7 @@ pub enum Argument {
     Help,
     Test,
     Demo,
+    Path(String),
 }
 pub fn collect() -> Vec<Argument>{
     let arg: Vec<String> = std::env::args().collect();
@@ -29,7 +30,7 @@ pub fn collect() -> Vec<Argument>{
 }
 fn eval(data: Vec<String>) -> Vec<Argument> {
     let mut re: Vec<Argument> = Vec::new();
-    for n in data {
+    for mut n in data {
         match n.as_str() {
             //chang how the arguments can be reached here!
             "help" | "-h" | "--help" => {
@@ -40,8 +41,23 @@ fn eval(data: Vec<String>) -> Vec<Argument> {
             },
             "demo" => {
                 re.push(Argument::Demo);
+            },
+            _ => {
+                if n.chars().count() > 3 {
+                    if  n.chars().nth(0).unwrap() == '-' &&
+                        n.chars().nth(1).unwrap() == 'f' && 
+                        n.chars().nth(2).unwrap() == '=' {
+                            n.remove(0);
+                            n.remove(0);
+                            n.remove(0);
+                            re.push(Argument::Path(n));
+                    } else {
+                        re.push(Argument::None);
+                    }
+                } else {
+                    re.push(Argument::None);
+                }
             }
-            _ => {}
         }
     }
     //add rules here
