@@ -1,4 +1,3 @@
-// use colored::Colorize;
 use std::collections::HashSet;
 #[derive(PartialEq)]
 #[derive(Hash)]
@@ -38,6 +37,9 @@ fn eval(data: Vec<String>) -> Vec<Argument> {
             },
             "test" => {
                 re.push(Argument::Test);
+            },
+            "demo" => {
+                re.push(Argument::Demo);
             }
             _ => {}
         }
