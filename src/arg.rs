@@ -58,21 +58,6 @@ fn eval(data: Vec<String>) -> Vec<Argument> {
     re
 }
 fn contains_duplicates(vec: &Vec<Argument>) -> Option<usize> {
-    // vec.iter()
-    //     .find_map(|&x| {
-    //         if vec.iter().filter(|&y| y == x).count() > 1 {
-    //             Some(x)
-    //         } else {
-    //             None
-    //         }
-    //     })
-    // let mut seen = HashSet::new();
-    // for x in vec {
-    //     if !seen.insert(x) {
-    //         return Some(x);
-    //     }
-    // }
-    // None
     let mut seen = HashSet::new();
     for (i, x) in vec.iter().enumerate() {
         if !seen.insert(x) {
