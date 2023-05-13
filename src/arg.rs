@@ -52,7 +52,6 @@ fn eval(data: Vec<String>) -> Vec<Argument> {
                             n.remove(0);
                             re.push(Argument::Path(n));
                     } else {
-                        re.push(Argument::None);
                     }
                 } else {
                     re.push(Argument::None);
