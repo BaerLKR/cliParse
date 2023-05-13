@@ -36,10 +36,10 @@ fn eval(data: Vec<String>) -> Vec<Argument> {
             "help" | "-h" | "--help" => {
                 re.push(Argument::Help);
             },
-            "test" => {
+            "test" | "--test" | "-t" => {
                 re.push(Argument::Test);
             },
-            "demo" => {
+            "demo" | "-d" => {
                 re.push(Argument::Demo);
             },
             _ => {
