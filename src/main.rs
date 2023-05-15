@@ -7,7 +7,14 @@ fn main() {
             arg::Argument::Test => println!("Test"),
             arg::Argument::Demo => demo(),
             arg::Argument::None | arg::Argument::Help => help(),
-            arg::Argument::Path(x) => println!("{x}")
+            arg::Argument::Path(x) => println!("{x}"),
+            arg::Argument::Nested(x) => {
+                match x {
+                    arg::Nest::One => println!("ONE"),
+                    arg::Nest::Two => println!("Two"),
+                }
+            }
+            // _ => {},
         }
     }
 }

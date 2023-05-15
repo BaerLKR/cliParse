@@ -8,7 +8,16 @@ pub enum Argument {
     Help,
     Test,
     Demo,
+    Nested(Nest),
     Path(String),
+}
+#[derive(PartialEq)]
+#[derive(Hash)]
+#[derive(Eq)]
+
+pub enum Nest {
+    One,
+    Two,
 }
 pub fn collect() -> Vec<Argument>{
     let arg: Vec<String> = std::env::args().collect();
@@ -51,21 +60,39 @@ fn eval(data: Vec<String>) -> Vec<Argument> {
                 re.push(Argument::Path(x));
                 c += 1;
             }
-            _ => {
-                if n.chars().count() > 3 {
-                    if  n.chars().nth(0).unwrap() == '-' &&
-                        n.chars().nth(1).unwrap() == 'f' && 
-                        n.chars().nth(2).unwrap() == '=' {
-                            let mut n = n.to_owned();
-                            n.remove(0);
-                            n.remove(0);
-                            n.remove(0);
-                            re.push(Argument::Path(n));
-                    } else {
+            "nest" => {
+                let x = &data[c + 1];
+                let x = x.to_owned();
+                match x.as_str() {
+                    "eins" => {
+                        re.push(Argument::Nested(Nest::One));
+                        c += 1;
                     }
-                } else {
-                    re.push(Argument::None);
+                    "zwei" => {
+                        re.push(Argument::Nested(Nest::Two));
+                        c += 1;
+                    },
+                    _ => {
+                        println!("An option for nest must be provided")
+                    },
                 }
+            }
+            _ => {
+                // if n.chars().count() > 3 {
+                //     if  n.chars().nth(0).unwrap() == '-' &&
+                //         n.chars().nth(1).unwrap() == 'f' && 
+                //         n.chars().nth(2).unwrap() == '=' {
+                //             let mut n = n.to_owned();
+                //             n.remove(0);
+                //             n.remove(0);
+                //             n.remove(0);
+                //             re.push(Argument::Path(n));
+                //     } else {
+                //     }
+                // } else {
+                //     re.push(Argument::None);
+                // }
+                re.push(Argument::None)
             }
         }
         if c >= (data.len() - 1) {
