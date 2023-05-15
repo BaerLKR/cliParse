@@ -30,7 +30,10 @@ pub fn collect() -> Vec<Argument>{
 }
 fn eval(data: Vec<String>) -> Vec<Argument> {
     let mut re: Vec<Argument> = Vec::new();
-    for mut n in data {
+    let mut c = 0;
+    loop {
+        c += 1;
+        let n = &data[c];
         match n.as_str() {
             //chang how the arguments can be reached here!
             "help" | "-h" | "--help" => {
@@ -42,11 +45,18 @@ fn eval(data: Vec<String>) -> Vec<Argument> {
             "demo" | "-d" => {
                 re.push(Argument::Demo);
             },
+            "-f" => {
+                let x = &data[c + 1];
+                let x = x.to_owned();
+                re.push(Argument::Path(x));
+                c += 1;
+            }
             _ => {
                 if n.chars().count() > 3 {
                     if  n.chars().nth(0).unwrap() == '-' &&
                         n.chars().nth(1).unwrap() == 'f' && 
                         n.chars().nth(2).unwrap() == '=' {
+                            let mut n = n.to_owned();
                             n.remove(0);
                             n.remove(0);
                             n.remove(0);
@@ -57,6 +67,9 @@ fn eval(data: Vec<String>) -> Vec<Argument> {
                     re.push(Argument::None);
                 }
             }
+        }
+        if c >= (data.len() - 1) {
+            break
         }
     }
     //add rules here
